@@ -8,8 +8,10 @@ import "./index.css";
 // import { App } from "./3_setup/App";
 // -----------------------------------------------------------
 // import { App } from "./4_setup/App"; // floor is a box, not a plane
-import { App } from "./5_setup/App"; // lights are in separate component
+// import { App } from "./5_setup/App"; // lights are in separate component
 // -----------------------------------------------------------
+
+import { App } from "./6_level_n_blocks_n_physics/App";
 
 // -----------------------------------------------------------
 
