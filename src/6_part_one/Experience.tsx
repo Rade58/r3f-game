@@ -5,7 +5,7 @@
 
 import { OrbitControls /* , Stage */ } from "@react-three/drei";
 
-// import { Perf } from "r3f-perf";
+import { Perf } from "r3f-perf";
 import { Lights } from "./Lights";
 import { Level } from "./Level";
 import { Physics } from "@react-three/rapier";
@@ -19,7 +19,7 @@ export function Experience() {
 
   return (
     <>
-      {/* <Perf position="top-left" /> */}
+      <Perf position="top-left" />
 
       <OrbitControls makeDefault />
       <Physics debug>

@@ -1,3 +1,4 @@
+import { useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { type RapierRigidBody, RigidBody } from "@react-three/rapier";
 import { useRef, useState } from "react";
@@ -233,8 +234,34 @@ function BlockEnd(
     position: [0, 0, 0], // default
   }
 ) {
+  const donut = useGLTF("/models/donuts-c-2.glb");
+
+  donut.scene.children.forEach((childMesh) => {
+    childMesh.castShadow = true;
+  });
+
+  /* useFrame(({ clock }) => {
+    const elapsed = clock.getElapsedTime();
+
+    // if (donut && donut.scene) {
+    //   donut.scene.rotation.y = elapsed;
+    // }
+  }); */
+
   return (
     <group position={position}>
+      {/* dount */}
+      <RigidBody
+        type="fixed"
+        colliders="ball"
+        // colliders="hull"
+        restitution={0.2}
+        friction={0}
+        position={[-0.35, -0.33, -0.5]}
+      >
+        <primitive object={donut.scene} scale={6} />
+      </RigidBody>
+      {/* floor */}
       <mesh
         // position={[0, -0.1, 0]}
         position={[0, 0, 0]}
