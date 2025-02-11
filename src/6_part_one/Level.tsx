@@ -1,7 +1,7 @@
 import { useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { type RapierRigidBody, RigidBody } from "@react-three/rapier";
-import { useRef, useState } from "react";
+import { ReactNode, useMemo, useRef, useState } from "react";
 import { BoxGeometry, Euler, MeshStandardMaterial, Quaternion } from "three";
 
 const boxGeo = new BoxGeometry(/* 4, 0.2, 4 */ 1, 1, 1);
@@ -21,14 +21,60 @@ const wallMaterial = new MeshStandardMaterial({
 
 //
 
-export function Level() {
+export function Level(
+  {
+    // children,
+    count,
+    types,
+  }: {
+    children?: ReactNode;
+    count: number;
+    types: (typeof BlockSpinner | typeof BlockLeftRight | typeof BlockLimbo)[];
+  } = {
+    count: 5,
+    types: [BlockSpinner, BlockLeftRight, BlockLimbo],
+  }
+) {
+  const blocks = useMemo(() => {
+    const blocks: typeof types = [];
+
+    // let count2 = 0;
+
+    for (let i = 0; i < count; i++) {
+      const type = types[Math.floor(Math.random() * types.length)];
+      blocks.push(type);
+
+      // I didn't understood problem
+      /* if (!types[count2]) {
+        count2 = 0;
+      }
+
+      if (types[i]) {
+        blocks.push(types[i]);
+      } else {
+        blocks.push(types[count2]);
+        count2++;
+      } */
+    }
+
+    return blocks;
+  }, [types, count]);
+
+  // console.log({ blocks });
+
   return (
     <>
-      <BlockStart position={[0, 0, 16]} />
-      <BlockSpinner position={[0, 0, 12]} />
-      <BlockLimbo position={[0, 0, 8]} />
-      <BlockLeftRight position={[0, 0, 4]} />
-      <BlockEnd position={[0, 0, 0]} />
+      <BlockStart position={[0, 0, 0]} />
+
+      {blocks.map((Block, ind) => {
+        return <Block position={[0, 0, -(ind + 1) * 4]} key={`block_${ind}`} />;
+      })}
+      <BlockEnd position={[0, 0, -(count + 1) * 4]} />
+      {/* <BlockStart position={[0, 0, 16]} /> */}
+      {/* <BlockSpinner position={[0, 0, 12]} /> */}
+      {/* <BlockLimbo position={[0, 0, 8]} /> */}
+      {/* <BlockLeftRight position={[0, 0, 4]} /> */}
+      {/* <BlockEnd position={[0, 0, 0]} /> */}
       {/* <BlockLimbo position={[0, 0, -4]} /> */}
       {/* <BlockLimbo position={[0, 0, -8]} /> */}
       {/* <BlockSpinner position={[0, 0, -12]} /> */}
@@ -38,7 +84,7 @@ export function Level() {
   );
 }
 
-function BlockStart(
+export function BlockStart(
   { position }: { position?: [number, number, number] } = {
     position: [0, 0, 0], // default
   }
@@ -56,7 +102,7 @@ function BlockStart(
   );
 }
 
-function BlockSpinner(
+export function BlockSpinner(
   { position }: { position?: [number, number, number] } = {
     position: [0, 0, 0], // default
   }
@@ -115,7 +161,7 @@ function BlockSpinner(
   );
 }
 
-function BlockLimbo(
+export function BlockLimbo(
   { position }: { position?: [number, number, number] } = {
     position: [0, 0, 0], // default
   }
@@ -172,7 +218,7 @@ function BlockLimbo(
   );
 }
 
-function BlockLeftRight(
+export function BlockLeftRight(
   { position }: { position?: [number, number, number] } = {
     position: [0, 0, 0], // default
   }
@@ -229,7 +275,7 @@ function BlockLeftRight(
   );
 }
 
-function BlockEnd(
+export function BlockEnd(
   { position }: { position?: [number, number, number] } = {
     position: [0, 0, 0], // default
   }

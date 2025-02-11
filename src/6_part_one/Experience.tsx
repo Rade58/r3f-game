@@ -12,6 +12,8 @@ import { Physics } from "@react-three/rapier";
 
 // import { useControls } from "leva";
 
+import { BlockSpinner, BlockLeftRight, BlockLimbo } from "./Level";
+
 export function Experience() {
   // const someControls = useControls("_", { test: 1 });
 
@@ -26,7 +28,7 @@ export function Experience() {
         {/* ---------------------------------- */}
         <Lights />
         {/* ---------------------------------- */}
-        <Level />
+        <Level count={5} types={[BlockSpinner, BlockLeftRight, BlockLimbo]} />
         {/* ---------------------------------- */}
       </Physics>
     </>
