@@ -1,6 +1,10 @@
 import { useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import { type RapierRigidBody, RigidBody } from "@react-three/rapier";
+import {
+  CuboidCollider,
+  type RapierRigidBody,
+  RigidBody,
+} from "@react-three/rapier";
 import { ReactNode, useMemo, useRef, useState } from "react";
 import { BoxGeometry, Euler, MeshStandardMaterial, Quaternion } from "three";
 
@@ -269,7 +273,7 @@ function BlockEnd(
       {/* dount */}
       <RigidBody
         type="fixed"
-        colliders="ball"
+        // colliders="ball"
         // colliders="hull"
         restitution={0.2}
         friction={0}
@@ -316,7 +320,35 @@ function Bounds({ count }: { count: number }) {
           material={wallMaterial}
           scale={[4, 1.5, 0.3]}
         />
+        {/* floor collider */}
+        <CuboidCollider
+          // for adding friction between marble and floor
+          // if you wouldn't set this, ball would be
+          // frictioning on the floor way too much
+          // wouldn't look like rolling the ball
+          friction={1}
+          restitution={0.2}
+          //
+
+          args={[2, 0.2 / 2, (4 * count) / 2]}
+          position={[0, -0.2 / 2, -(4 * count) / 2 + 2]}
+        />
       </RigidBody>
+      {/* initially I placed it here
+      but you can just add it like I did above
+      no need for creation of new rigid body
+      */}
+      {/* floor collider */}
+      {/* <RigidBody type="fixed" colliders={false}>
+        <CuboidCollider
+        // for adding friction between marble and floor
+          friction={1}
+          restitution={0.2}
+          //
+          args={[2, 0.2 / 2, (4 * count) / 2]}
+          position={[0, -0.2 / 2, -(4 * count) / 2 + 2]}
+        />
+      </RigidBody> */}
     </>
   );
 }
