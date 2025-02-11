@@ -11,7 +11,7 @@ import "./index.css";
 // import { App } from "./5_setup/App"; // lights are in separate component
 // -----------------------------------------------------------
 
-import { App } from "./6_level_n_blocks_n_physics/App";
+import { App } from "./6_part_one/App";
 
 // -----------------------------------------------------------
 
