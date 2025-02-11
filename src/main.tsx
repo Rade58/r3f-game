@@ -11,7 +11,8 @@ import "./index.css";
 // import { App } from "./5_setup/App"; // lights are in separate component
 // -----------------------------------------------------------
 
-import { App } from "./6_part_one/App";
+// import { App } from "./6_part_one/App";
+import { App } from "./7_part_two/App";
 
 // -----------------------------------------------------------
 
