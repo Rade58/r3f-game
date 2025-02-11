@@ -31,7 +31,8 @@ export function App() {
           near: 0.1,
           far: 50,
           // position: [3, 2, 6],
-          position: [-4, 3, 6],
+          // position: [-4, 3, 6],
+          position: [3, 3, 6],
           // position: [0, 0, 0],
           // zoom: 100,
         }}
