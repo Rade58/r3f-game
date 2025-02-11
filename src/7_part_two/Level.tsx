@@ -57,7 +57,7 @@ export function Level(
       })}
       <BlockEnd position={[0, 0, -(count + 1) * 4]} />
 
-      <Bounds />
+      <Bounds count={count + 2} />
     </>
   );
 }
@@ -290,6 +290,32 @@ function BlockEnd(
   );
 }
 
-function Bounds() {
-  return <></>;
+function Bounds({ count }: { count: number }) {
+  return (
+    <>
+      <RigidBody
+        type="fixed"
+        position={[2 + 0.3 / 2, 1.5 / 2, -((count - 1) * 4) / 2]}
+      >
+        <mesh
+          castShadow
+          geometry={boxGeo}
+          material={wallMaterial}
+          scale={[0.3, 1.5, 4 * count]}
+        />
+      </RigidBody>
+
+      <RigidBody
+        type="fixed"
+        position={[-(2 + 0.3 / 2), 1.5 / 2, -((count - 1) * 4) / 2]}
+      >
+        <mesh
+          receiveShadow
+          geometry={boxGeo}
+          material={wallMaterial}
+          scale={[0.3, 1.5, 4 * count]}
+        />
+      </RigidBody>
+    </>
+  );
 }
