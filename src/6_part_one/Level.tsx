@@ -26,6 +26,11 @@ export function Level() {
       <BlockStart position={[0, 0, 8]} />
       <BlockSpinner position={[0, 0, 4]} />
       <BlockLimbo position={[0, 0, 0]} />
+      {/* <BlockLimbo position={[0, 0, -4]} /> */}
+      {/* <BlockLimbo position={[0, 0, -8]} /> */}
+      {/* <BlockSpinner position={[0, 0, -12]} /> */}
+      {/* <BlockSpinner position={[0, 0, -16]} /> */}
+      {/* <BlockSpinner position={[0, 0, -20]} /> */}
     </>
   );
 }
@@ -113,6 +118,23 @@ function BlockLimbo(
   }
 ) {
   const limboTrapBodyRef = useRef<RapierRigidBody>(null);
+
+  const [timeOffset] = useState<number>(() => {
+    return Math.random() * Math.PI * 2;
+  });
+
+  useFrame(({ clock }, delta) => {
+    const elapsed = clock.getElapsedTime();
+    const angle = elapsed + timeOffset;
+
+    if (limboTrapBodyRef.current) {
+      limboTrapBodyRef.current.setNextKinematicTranslation({
+        x: position?.[0] || 0,
+        y: Math.sin(angle) + 1.15 + (position?.[1] || 0),
+        z: position?.[2] || 0,
+      });
+    }
+  });
 
   return (
     <group position={position}>
