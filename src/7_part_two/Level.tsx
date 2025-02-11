@@ -56,11 +56,13 @@ export function Level(
         return <Block position={[0, 0, -(ind + 1) * 4]} key={`block_${ind}`} />;
       })}
       <BlockEnd position={[0, 0, -(count + 1) * 4]} />
+
+      <Bounds />
     </>
   );
 }
 
-export function BlockStart(
+function BlockStart(
   { position }: { position?: [number, number, number] } = {
     position: [0, 0, 0], // default
   }
@@ -251,7 +253,7 @@ export function BlockLeftRight(
   );
 }
 
-export function BlockEnd(
+function BlockEnd(
   { position }: { position?: [number, number, number] } = {
     position: [0, 0, 0], // default
   }
@@ -286,4 +288,8 @@ export function BlockEnd(
       />
     </group>
   );
+}
+
+function Bounds() {
+  return <></>;
 }
