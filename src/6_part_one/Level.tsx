@@ -23,9 +23,10 @@ const wallMaterial = new MeshStandardMaterial({
 export function Level() {
   return (
     <>
-      <BlockStart position={[0, 0, 8]} />
-      <BlockSpinner position={[0, 0, 4]} />
-      <BlockLimbo position={[0, 0, 0]} />
+      <BlockStart position={[0, 0, 12]} />
+      <BlockSpinner position={[0, 0, 8]} />
+      <BlockLimbo position={[0, 0, 4]} />
+      <BlockLeftRight position={[0, 0, 0]} />
       {/* <BlockLimbo position={[0, 0, -4]} /> */}
       {/* <BlockLimbo position={[0, 0, -8]} /> */}
       {/* <BlockSpinner position={[0, 0, -12]} /> */}
@@ -152,6 +153,63 @@ function BlockLimbo(
           geometry={boxGeo}
           material={obstacleMaterial}
           scale={[3.5, 0.3, 0.3]}
+          // position-y={0.3 / 2}
+          // position-y={3}
+        />
+      </RigidBody>
+      {/* ------------------------------------ */}
+      {/* floor */}
+      <mesh
+        position={[0, -0.1, 0]}
+        receiveShadow
+        geometry={boxGeo}
+        material={floorBlockMaterial_2}
+        scale={[4, 0.2, 4]}
+      />
+    </group>
+  );
+}
+
+function BlockLeftRight(
+  { position }: { position?: [number, number, number] } = {
+    position: [0, 0, 0], // default
+  }
+) {
+  const pendulumBodyRef = useRef<RapierRigidBody>(null);
+
+  const [timeOffset] = useState<number>(() => {
+    return Math.random() * Math.PI * 2;
+  });
+
+  useFrame(({ clock }, delta) => {
+    const elapsed = clock.getElapsedTime();
+    const x = Math.sin(elapsed + timeOffset) * 1.25;
+
+    if (pendulumBodyRef.current) {
+      pendulumBodyRef.current.setNextKinematicTranslation({
+        x: x + (position?.[0] || 0),
+        y: 0.75 + (position?.[1] || 0),
+        z: position?.[2] || 0,
+      });
+    }
+  });
+
+  return (
+    <group position={position}>
+      {/*  ----------- pendulum -------------- */}
+      <RigidBody
+        type="kinematicPosition"
+        position-y={0.3}
+        restitution={0.2}
+        friction={0}
+        ref={pendulumBodyRef}
+      >
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={boxGeo}
+          material={obstacleMaterial}
+          scale={[1.5, 1.5, 0.3]}
           // position-y={0.3 / 2}
           // position-y={3}
         />
