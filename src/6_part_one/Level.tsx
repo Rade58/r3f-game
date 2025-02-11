@@ -6,13 +6,13 @@ import { BoxGeometry, Euler, MeshStandardMaterial, Quaternion } from "three";
 const boxGeo = new BoxGeometry(/* 4, 0.2, 4 */ 1, 1, 1);
 //
 const floorBlockMaterial_1 = new MeshStandardMaterial({
-  color: "limegreen",
+  color: "#7ad47a", // replaced "limegreen",
 });
 const floorBlockMaterial_2 = new MeshStandardMaterial({
   color: "#b9e972", // greenyellow was bad
 });
 const obstacleMaterial = new MeshStandardMaterial({
-  color: "orangered",
+  color: "#e77247", // replaced "orangered",
 });
 const wallMaterial = new MeshStandardMaterial({
   color: "slategray",
@@ -23,10 +23,11 @@ const wallMaterial = new MeshStandardMaterial({
 export function Level() {
   return (
     <>
-      <BlockStart position={[0, 0, 12]} />
-      <BlockSpinner position={[0, 0, 8]} />
-      <BlockLimbo position={[0, 0, 4]} />
-      <BlockLeftRight position={[0, 0, 0]} />
+      <BlockStart position={[0, 0, 16]} />
+      <BlockSpinner position={[0, 0, 12]} />
+      <BlockLimbo position={[0, 0, 8]} />
+      <BlockLeftRight position={[0, 0, 4]} />
+      <BlockEnd position={[0, 0, 0]} />
       {/* <BlockLimbo position={[0, 0, -4]} /> */}
       {/* <BlockLimbo position={[0, 0, -8]} /> */}
       {/* <BlockSpinner position={[0, 0, -12]} /> */}
@@ -221,6 +222,25 @@ function BlockLeftRight(
         receiveShadow
         geometry={boxGeo}
         material={floorBlockMaterial_2}
+        scale={[4, 0.2, 4]}
+      />
+    </group>
+  );
+}
+
+function BlockEnd(
+  { position }: { position?: [number, number, number] } = {
+    position: [0, 0, 0], // default
+  }
+) {
+  return (
+    <group position={position}>
+      <mesh
+        // position={[0, -0.1, 0]}
+        position={[0, 0, 0]}
+        receiveShadow
+        geometry={boxGeo}
+        material={floorBlockMaterial_1}
         scale={[4, 0.2, 4]}
       />
     </group>
