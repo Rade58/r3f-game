@@ -16,7 +16,7 @@ const obstacleMaterial = new MeshStandardMaterial({
   color: "#e77247", // replaced "orangered",
 });
 const wallMaterial = new MeshStandardMaterial({
-  color: "slategray",
+  color: "#acb6c0", // replaced"slategray",
 });
 
 //
@@ -293,27 +293,28 @@ function BlockEnd(
 function Bounds({ count }: { count: number }) {
   return (
     <>
-      <RigidBody
-        type="fixed"
-        position={[2 + 0.3 / 2, 1.5 / 2, -((count - 1) * 4) / 2]}
-      >
+      <RigidBody type="fixed">
         <mesh
+          position={[2 + 0.3 / 2, 1.5 / 2, -((count - 1) * 4) / 2]}
           castShadow
           geometry={boxGeo}
           material={wallMaterial}
           scale={[0.3, 1.5, 4 * count]}
         />
-      </RigidBody>
-
-      <RigidBody
-        type="fixed"
-        position={[-(2 + 0.3 / 2), 1.5 / 2, -((count - 1) * 4) / 2]}
-      >
         <mesh
+          position={[-(2 + 0.3 / 2), 1.5 / 2, -((count - 1) * 4) / 2]}
           receiveShadow
           geometry={boxGeo}
           material={wallMaterial}
           scale={[0.3, 1.5, 4 * count]}
+        />
+
+        <mesh
+          position={[0, 1.5 / 2, -count * 4 + 2 - 0.3 / 2]}
+          receiveShadow
+          geometry={boxGeo}
+          material={wallMaterial}
+          scale={[4, 1.5, 0.3]}
         />
       </RigidBody>
     </>
