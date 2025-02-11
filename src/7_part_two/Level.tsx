@@ -293,7 +293,7 @@ function BlockEnd(
 function Bounds({ count }: { count: number }) {
   return (
     <>
-      <RigidBody type="fixed">
+      <RigidBody type="fixed" restitution={0.2} friction={0}>
         <mesh
           position={[2 + 0.3 / 2, 1.5 / 2, -((count - 1) * 4) / 2]}
           castShadow
