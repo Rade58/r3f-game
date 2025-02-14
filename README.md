@@ -27,3 +27,7 @@ pnpm add @react-three/rapier
 ---
 
 ---
+
+# Google font for interface
+
+[Bebas Neue](https://fonts.google.com/specimen/Bebas+Neue)

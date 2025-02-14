@@ -21,7 +21,7 @@ export function Experience() {
 
   return (
     <>
-      <Perf position="top-left" />
+      {/* <Perf position="top-left" /> */}
       {/* <MyHelpers /> */}
 
       <Physics
