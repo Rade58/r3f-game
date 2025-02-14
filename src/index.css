@@ -54,12 +54,12 @@ canvas {
 }
 
 /* ----------------------------------- */
-.html_screen iframe {
+/* from project (simple portfolio) */
+/* .html_screen iframe {
   width: 1024px;
   height: 670px;
-  /* 
-  */
+
   border: none;
   border-radius: 20px;
   background: #000000;
-}
+} */
