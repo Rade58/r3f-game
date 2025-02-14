@@ -9,6 +9,7 @@ export function Player() {
   //
   const [subscribeKeys, getKeys] = useKeyboardControls();
 
+  // using delta to handle frame rate acctoss devices
   useFrame(({ clock }, delta) => {
     // const keys = getKeys();
     // console.log(keys);
@@ -31,6 +32,31 @@ export function Player() {
     } */
     // we are not doing above because we didn't handle
     // when player presses on multiple keys at the same time
+
+    // we will change these values
+    const impulse = { x: 0, y: 0, z: 0 };
+    const torque = { x: 0, y: 0, z: 0 };
+
+    if (forward) {
+      torque.x = -0.02;
+    }
+    if (backward) {
+      torque.x = 0.02;
+    }
+    if (leftward) {
+      torque.z = 0.01;
+    }
+    if (rightward) {
+      torque.z = -0.01;
+    }
+    if (jump) {
+      impulse.y = 0.09;
+    }
+
+    if (marbleRef.current) {
+      marbleRef.current.applyImpulse(impulse, true);
+      marbleRef.current.applyTorqueImpulse(torque, true);
+    }
   });
 
   return (
