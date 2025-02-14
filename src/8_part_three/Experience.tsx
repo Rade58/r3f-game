@@ -23,7 +23,7 @@ export function Experience() {
   return (
     <>
       <Perf position="top-left" />
-
+      <axesHelper args={[10]} />
       <OrbitControls makeDefault />
       <Physics debug>
         {/* ---------------------------------- */}
