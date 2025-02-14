@@ -9,15 +9,7 @@ import {
 import { Vector3 } from "three";
 
 export function Player() {
-  // for camera damping
-  // we need Vector3 instances
-  // created only onece during lifecycle of this
-  // component
-
   const [smoothCameraPosition] = useState(() => {
-    // also will be initial position of the marble
-    // after we copy it in useFrame
-
     return new Vector3(10, 10, 10);
   });
 
@@ -27,8 +19,6 @@ export function Player() {
 
   // -----------------
 
-  // just needed for jumping
-  // because we need to cast a ray
   const { rapier, world } = useRapier();
   //
 
@@ -97,27 +87,6 @@ export function Player() {
 
       // ----------------------------------------------
       // ----------------------------------------------
-      // what we want when player goes left for example
-      // we want that marble goes left of the screen first
-      // and we want camera to follow but gradually
-      // , like it takes time to follow marble
-
-      // so marble will get to the left of the screen
-      // without this, marble will never get to the screen sides for example
-      // it would always be in the center since
-      // camera would follow imediatelly
-
-      // we can do this with linear interpolation
-
-      // linear interpolation (lerp)
-      // updating smooth camera stuff (for camera dumping)
-      // 0.1 means that the value will get
-      // 1/10 closer to the destination
-
-      // so 1/10 closer on every frame
-
-      // and we deen to use delta time because of
-      // frame rates accross devices
 
       // smoothCameraPosition.lerp(cameraPosition, 0.1);
       smoothCameraPosition.lerp(cameraPosition, 5 * delta);
