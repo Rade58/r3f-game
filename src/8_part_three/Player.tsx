@@ -119,6 +119,8 @@ export function Player() {
       const ray = new rapier.Ray(origin, direction);
       // we will cast a ray to test whole world
 
+      // second arg max time of impact
+      // third is soli (boolean)
       const hit = world.castRay(ray, 10, true);
 
       // if time of impact is above 0
@@ -140,7 +142,7 @@ export function Player() {
   }
 
   useEffect(() => {
-    subscribeKeys(
+    const unsubscribeKeys = subscribeKeys(
       (state) => {
         return state.jump;
       },
@@ -150,6 +152,18 @@ export function Player() {
         }
       }
     );
+
+    // unsubscribing
+    // if we wouldn't do this
+    // if we make a change because of
+    // hot module replacement
+    // component would rerender and
+    // it would make a subscription again
+    // we would have two functions executing
+    // which would make our ball jump two times high
+    return () => {
+      unsubscribeKeys();
+    };
   }, []);
 
   // we define damping (linearDamping) because we want to be able to stop
