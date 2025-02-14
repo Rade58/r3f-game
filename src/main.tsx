@@ -16,7 +16,8 @@ import "./index.css";
 // import { App } from "./8_part_three/App";
 // import { App } from "./9_part_four/App";
 // import { App } from "./10_part_five_light/App";
-import { App } from "./11_part_six_interface/App";
+// import { App } from "./11_part_six_interface/App";
+import { App } from "./12_part_seven_game_mechanics/App";
 
 // -----------------------------------------------------------
 
