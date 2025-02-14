@@ -1,9 +1,18 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useKeyboardControls } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import { type RapierRigidBody, RigidBody } from "@react-three/rapier";
+import {
+  type RapierRigidBody,
+  RigidBody,
+  useRapier,
+} from "@react-three/rapier";
 
 export function Player() {
+  // just needed for jumping
+  // because we need to cast a ray
+  const { rapier, world } = useRapier();
+  //
+
   const marbleRef = useRef<RapierRigidBody>(null);
 
   //
@@ -13,7 +22,7 @@ export function Player() {
   useFrame((_, delta) => {
     // const keys = getKeys();
     // console.log(keys);
-    const { forward, backward, leftward, rightward, jump } = getKeys();
+    const { forward, backward, leftward, rightward /* , jump */ } = getKeys();
 
     // not doing this way (I did it like this and I didn't take
     // in consideration that player can press multiple keys at the
@@ -70,16 +79,82 @@ export function Player() {
       torque.z -= torqueStrength;
       impulse.x += impulseStrength;
     }
-    if (jump) {
+    // we don't want to apply jump on each
+    // we use subscribe for this (we subscribe in useEffect)
+    /* if (jump) {
       // impulse.y = 0.09;
-      impulse.y += impulseStrength * 6;
-    }
+      impulse.y += impulseStrength;
+    } */
 
     if (marbleRef.current) {
       marbleRef.current.applyImpulse(impulse, true);
       marbleRef.current.applyTorqueImpulse(torque, true);
     }
   });
+
+  function jump() {
+    if (marbleRef.current) {
+      // we need to test the collision with floor
+      // because we  only want to allow jump
+      // if marble is on the floor
+      // if it is in collision with floor
+
+      // we don't want to be able to jump
+      // when marble is already in air
+
+      // this is similar like raycasting but it isn't
+
+      const origin = marbleRef.current.translation();
+
+      // only allow jump when y is 0
+      // but, remember that floor is 0.3 above 0
+
+      origin.y -= 0.31;
+
+      const direction = { x: 0, y: -1, z: 0 };
+
+      // now we need to use Rapier library
+      //
+
+      const ray = new rapier.Ray(origin, direction);
+      // we will cast a ray to test whole world
+
+      const hit = world.castRay(ray, 10, true);
+
+      // if time of impact is above 0
+      // we shouldn't be able to jump
+      // since we are not on the ground
+
+      console.log({ hit });
+      if (hit) {
+        console.log(hit.timeOfImpact);
+      }
+
+      if (hit && hit.timeOfImpact < 0.15) {
+        // we are giving a close enough chance to jump
+        // if it is bellow 0.15
+        // I guess this is some aproximate value
+        marbleRef.current.applyImpulse({ x: 0, y: 0.5, z: 0 }, true);
+      }
+    }
+  }
+
+  useEffect(() => {
+    subscribeKeys(
+      (state) => {
+        return state.jump;
+      },
+      (value) => {
+        if (value) {
+          jump();
+        }
+      }
+    );
+  }, []);
+
+  // we define damping (linearDamping) because we want to be able to stop
+  // marble, because without it when we apply force
+  // it would roll to much, maybe never stop
 
   return (
     <RigidBody
@@ -89,6 +164,8 @@ export function Player() {
       restitution={0.2}
       position={[0, 1, 0]}
       ref={marbleRef}
+      //
+      linearDamping={0.5}
     >
       <mesh
         //
