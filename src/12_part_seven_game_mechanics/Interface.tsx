@@ -5,7 +5,7 @@ import { useGameStore } from "./stores/useGameStore";
 export function Interface() {
   const phase = useGameStore(({ phase }) => phase);
 
-  console.log({ phase });
+  // console.log({ phase });
 
   // const [subscribe, getKeys] = useKeyboardControls();
   const forward = useKeyboardControls((state) => state.forward);

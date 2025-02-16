@@ -17,6 +17,11 @@ export function Player() {
   const blockCount = useGameStore(({ blocksCount }) => blocksCount);
 
   // --------------------------------------------------------------
+  function reset() {
+    console.log("reset");
+  }
+
+  // --------------------------------------------------------------
 
   const [smoothCameraPosition] = useState(() => {
     return new Vector3(10, 10, 10);
@@ -146,6 +151,15 @@ export function Player() {
   }
 
   useEffect(() => {
+    // we want to subscribe on `phase` branch change
+    const unsubPhase = useGameStore.subscribe(
+      ({ phase }) => phase,
+      (phaseVal) => {
+        console.log("pahe changes to ", phaseVal);
+      }
+    );
+    //
+
     const unsubscribeKeys = subscribeKeys(
       (state) => {
         return state.jump;
@@ -173,6 +187,8 @@ export function Player() {
       unsubscribeKeys();
       //
       unsubscribeAny();
+      //
+      unsubPhase();
     };
   }, []);
 
