@@ -7,6 +7,9 @@ interface GameState {
   // ----------------------
   //
   phase: "ready" | "playing" | "ended";
+
+  // methods
+  start: () => void;
 }
 
 export const useGameStore = create<GameState>((set) => {
@@ -16,5 +19,10 @@ export const useGameStore = create<GameState>((set) => {
     // ----------------------
     //
     phase: "ready",
+    //
+    // methods
+    start() {
+      set((_) => ({ phase: "playing" }));
+    },
   };
 });
