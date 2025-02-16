@@ -156,6 +156,10 @@ export function Player() {
       ({ phase }) => phase,
       (phaseVal) => {
         console.log("pahe changes to ", phaseVal);
+
+        if (phaseVal === "ready") {
+          reset();
+        }
       }
     );
     //
