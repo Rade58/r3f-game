@@ -19,6 +19,18 @@ export function Player() {
   // --------------------------------------------------------------
   function reset() {
     console.log("reset");
+
+    // In the reset function, we are going to call three
+    // functions on the marble body
+    // - setTranslation to put it back at the origin
+    // - setLinvel to remove any translation force
+    // - setAngvel to remove any angular force
+
+    if (marbleRef.current) {
+      marbleRef.current.setTranslation({ x: 0, y: 1, z: 0 }, true);
+      marbleRef.current.setLinvel({ x: 0, y: 0, z: 0 }, true);
+      marbleRef.current.setAngvel({ x: 0, y: 0, z: 0 }, true);
+    }
   }
 
   // --------------------------------------------------------------
