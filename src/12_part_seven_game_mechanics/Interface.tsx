@@ -1,7 +1,12 @@
 import { useKeyboardControls } from "@react-three/drei";
 import { useEffect } from "react";
+import { useGameStore } from "./stores/useGameStore";
 
 export function Interface() {
+  const phase = useGameStore(({ phase }) => phase);
+
+  console.log({ phase });
+
   // const [subscribe, getKeys] = useKeyboardControls();
   const forward = useKeyboardControls((state) => state.forward);
   const backward = useKeyboardControls((state) => state.backward);

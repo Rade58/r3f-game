@@ -7,8 +7,17 @@ import {
   useRapier,
 } from "@react-three/rapier";
 import { Vector3 } from "three";
+import { useGameStore } from "./stores/useGameStore";
 
 export function Player() {
+  const start = useGameStore(({ start }) => start);
+  const end = useGameStore(({ end }) => end);
+  const restart = useGameStore(({ restart }) => restart);
+
+  const blockCount = useGameStore(({ blocksCount }) => blocksCount);
+
+  // --------------------------------------------------------------
+
   const [smoothCameraPosition] = useState(() => {
     return new Vector3(10, 10, 10);
   });
@@ -35,8 +44,6 @@ export function Player() {
     // console.log(keys);
     const { forward, backward, leftward, rightward /* , jump */ } = getKeys();
 
-    // using delta to handle frame rate acctoss devices
-    // handle frame rate with delta
     const impulseStrength = 0.6 * delta;
     const torqueStrength = 0.2 * delta;
 
@@ -95,15 +102,23 @@ export function Player() {
 
       // ----------------------------------------------
       // ----------------------------------------------
-      // instead of these
-      // camera.position.copy(cameraPosition);
-      // camera.lookAt(cameraTarget);
-      // we will use smooth value
+
       camera.position.copy(smoothCameraPosition);
       camera.lookAt(smoothCameraTarget);
 
       // ---------------------------------------------------
       // ***************************************************
+
+      // calling end to change `phase` to "ended"
+
+      if (marblePosition.z < -(blockCount * 4 + 2)) {
+        end();
+      }
+
+      // if marble falls bellow -4 by y we will restart
+      if (marblePosition.y < -4) {
+        restart();
+      }
     }
   });
 
@@ -142,10 +157,22 @@ export function Player() {
       }
     );
 
+    // ---------- store ----------------
+    // every time user presses on buttons we define
+    // we will change the the `pahese` branch of the state to be
+    // "ready" (we call start method)
+    const unsubscribeAny = subscribeKeys((state) => {
+      // console.log("any key down");
+      start();
+    });
+    //
+
     // unsubscribing
 
     return () => {
       unsubscribeKeys();
+      //
+      unsubscribeAny();
     };
   }, []);
 
