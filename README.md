@@ -31,3 +31,11 @@ pnpm add @react-three/rapier
 # Google font for interface
 
 [Bebas Neue](https://fonts.google.com/specimen/Bebas+Neue)
+
+# Global State
+
+manged with [zustand](https://github.com/pmndrs/zustand)
+
+```
+pnpm add zustand
+```

@@ -31,12 +31,12 @@ export function Interface() {
       {/* ------------------------------- */}
       <div className="controls">
         <div className="raw">
-          <div className={`key ${forward ? "active" : ""}`}>W</div>
+          <div className={`key ${forward ? "active" : ""}`}>{/* W */}</div>
         </div>
         <div className="raw">
-          <div className={`key ${leftward ? "active" : ""}`}>A</div>
-          <div className={`key ${backward ? "active" : ""}`}>S</div>
-          <div className={`key ${rightward ? "active" : ""}`}>D</div>
+          <div className={`key ${leftward ? "active" : ""}`}>{/* A */}</div>
+          <div className={`key ${backward ? "active" : ""}`}>{/* S */}</div>
+          <div className={`key ${rightward ? "active" : ""}`}>{/* D */}</div>
         </div>
         <div className="raw">
           <div className={`key large ${jump ? "active" : ""}`}></div>

@@ -13,11 +13,18 @@ import { Physics } from "@react-three/rapier";
 import { BlockSpinner, BlockLeftRight, BlockLimbo } from "./Level";
 import { Player } from "./Player";
 import { MyHelpers } from "./MyHelpers";
+import { useGameStore } from "./stores/useGameStore";
 
 export function Experience() {
   // const someControls = useControls("_", { test: 1 });
 
   // const cubeRef = useRef<Mesh>(null);
+
+  // blocksCount is here just for testing purposes
+  // blocksCount we don't inted to change
+  // and this component should rerender only when
+  // this blockCount branch of state changes
+  const blocksCount = useGameStore(({ blocksCount }) => blocksCount);
 
   return (
     <>
@@ -33,7 +40,11 @@ export function Experience() {
         {/* ---------------------------------- */}
         <Lights />
         {/* ---------------------------------- */}
-        <Level count={5} types={[BlockSpinner, BlockLeftRight, BlockLimbo]} />
+        {/* <Level count={5} types={[BlockSpinner, BlockLeftRight, BlockLimbo]} /> */}
+        <Level
+          count={blocksCount}
+          types={[BlockSpinner, BlockLeftRight, BlockLimbo]}
+        />
         {/* ---------------------------------- */}
         <Player />
       </Physics>
