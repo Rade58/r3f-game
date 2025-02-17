@@ -1,11 +1,14 @@
 import { useKeyboardControls } from "@react-three/drei";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useGameStore } from "./stores/useGameStore";
+import { addEffect } from "@react-three/fiber";
 
 export function Interface() {
   const phase = useGameStore(({ phase }) => phase);
-
-  // console.log({ phase });
+  const startTime = useGameStore(({ startTime }) => startTime);
+  const endTime = useGameStore(({ endTime }) => endTime);
+  console.log({ phase });
+  const restart = useGameStore(({ restart }) => restart);
 
   // const [subscribe, getKeys] = useKeyboardControls();
   const forward = useKeyboardControls((state) => state.forward);
@@ -14,6 +17,40 @@ export function Interface() {
   const rightward = useKeyboardControls((state) => state.rightward);
   const jump = useKeyboardControls((state) => state.jump);
 
+  const timeDivRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // we can't use useFrame here since this
+    // component isn't nested in <Canvas>
+    // so we use `addEffect`
+    const unsubscribeEffect = addEffect((val) => {
+      // console.log({ val: val / 1000 });
+
+      //
+      const state = useGameStore.getState();
+
+      let elapsedTime: number | string = 0;
+
+      if (state.phase === "playing") {
+        elapsedTime = Date.now() - state.startTime;
+      } else if (state.phase === "ended") {
+        elapsedTime = state.endTime - state.startTime;
+      }
+
+      elapsedTime = elapsedTime / 1000;
+      elapsedTime = elapsedTime.toFixed(2);
+
+      console.log({ elapsedTime });
+
+      /* if (timeDivRef.current) {
+        timeDivRef.current.innerText = elapsedTime;
+      } */
+    });
+
+    return () => {
+      unsubscribeEffect();
+    };
+  }, []);
   // console.log({ forward });
 
   /* useEffect(() => {
@@ -31,8 +68,14 @@ export function Interface() {
 
   return (
     <div className="interface">
-      <div className="time">0.00</div>
-      <div className="restart">Restart</div>
+      <div className="time" ref={timeDivRef}>
+        0.00
+      </div>
+      {phase === "ended" && (
+        <div className="restart" onClick={restart}>
+          Restart
+        </div>
+      )}
       {/* ------------------------------- */}
       <div className="controls">
         <div className="raw">

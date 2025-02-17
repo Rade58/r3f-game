@@ -8,6 +8,9 @@ interface GameState {
   // ----------------------
   //
   phase: "ready" | "playing" | "ended";
+  //
+  startTime: number;
+  endTime: number;
 
   // methods
   start: () => void;
@@ -24,11 +27,14 @@ export const useGameStore = create(
       //
       phase: "ready",
       //
+      startTime: 0,
+      endTime: 0,
+      //
       // methods
       start() {
         set(({ phase }) => {
           if (phase === "ready") {
-            return { phase: "playing" };
+            return { phase: "playing", endTime: Date.now() };
           }
           return {};
         });
@@ -36,7 +42,7 @@ export const useGameStore = create(
       end() {
         set(({ phase }) => {
           if (phase === "playing") {
-            return { phase: "ended" };
+            return { phase: "ended", endTime: Date.now() };
           }
           return {};
         });
