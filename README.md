@@ -39,3 +39,17 @@ manged with [zustand](https://github.com/pmndrs/zustand)
 ```
 pnpm add zustand
 ```
+
+## if you want to improve the game
+
+- Make the axe obstacle look like an actual balancing axe
+- More traps variations
+- Control over the trap size
+- Better scenery
+- A boost key
+- Boost bonuses that are spread across the level
+- Different difficulties
+- Sounds
+- Particles
+- Marble customisation
+- Lasers that kill you instantly

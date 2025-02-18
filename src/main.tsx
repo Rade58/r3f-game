@@ -17,7 +17,9 @@ import "./index.css";
 // import { App } from "./9_part_four/App";
 // import { App } from "./10_part_five_light/App";
 // import { App } from "./11_part_six_interface/App";
-import { App } from "./12_part_seven_game_mechanics/App";
+// import { App } from "./12_part_seven_game_mechanics/App";
+// import { App } from "./13_part_eight_game_random_level_after_restart/App";
+import { App } from "./14_part_nine_make_it_pop/App";
 
 // -----------------------------------------------------------
 

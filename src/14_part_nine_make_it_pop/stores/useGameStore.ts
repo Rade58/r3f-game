@@ -3,8 +3,8 @@ import { create } from "zustand";
 import { subscribeWithSelector } from "zustand/middleware";
 
 interface GameState {
-  // just for test purposes
   blocksCount: number;
+  blocksSeed: number;
   // ----------------------
   //
   phase: "ready" | "playing" | "ended";
@@ -21,8 +21,8 @@ interface GameState {
 export const useGameStore = create(
   subscribeWithSelector<GameState>((set) => {
     return {
-      // just for test purposes
-      blocksCount: 5,
+      blocksCount: 10,
+      blocksSeed: 0,
       // ----------------------
       //
       phase: "ready",
@@ -50,8 +50,9 @@ export const useGameStore = create(
       restart() {
         set(({ phase }) => {
           if (phase === "ended" || phase === "playing") {
-            return { phase: "ready" };
+            return { phase: "ready", blocksSeed: Math.random() };
           }
+
           return {};
         });
       },
